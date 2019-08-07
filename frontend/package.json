@@ -1,7 +1,7 @@
 {
- "name": "pizzaql-frontend",
+ "name": "@swissx/ganja-frontend",
  "version": "0.0.2",
- "description": "Frontend for PizzaQL",
+ "description": "Frontend for Ganja-orders",
  "scripts": {
   "dev": "next",
   "build": "next build",
@@ -11,7 +11,6 @@
   "cy:run": "cypress run"
  },
  "main": "pages/index.js",
- "author": "Antoni Kepinski <a@kepinski.me> (https://kepinski.me)",
  "license": "MIT",
  "devDependencies": {
   "@babel/core": "^7.5.5",
@@ -32,6 +31,7 @@
  "dependencies": {
   "@blueprintjs/core": "^3.18.0",
   "@blueprintjs/icons": "^3.10.0",
+  "@paypal/checkout-components": "^5.0.52",
   "apollo-cache-inmemory": "^1.6.2",
   "apollo-client": "^2.6.3",
   "apollo-link-http": "^1.5.15",

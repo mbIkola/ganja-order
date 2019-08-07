@@ -1,86 +1,51 @@
-# [![PizzaQL](media/logo/horizontal-scaled.png)](https://github.com/pizzaql/pizzaql)
+# [![Ganja](media/logo/logo.svg)](https://github.com/mbikola/ganja-order.git)
 
-> Modern OSS Order Management System for Pizza Restaurants.
+> Ganja order page.
 
-[![Build Status](https://travis-ci.org/pizzaql/pizzaql.svg?branch=master)](https://travis-ci.org/pizzaql/pizzaql)
+[![Build Status](https://travis-ci.org/mbikola/ganja-order.svg?branch=master)](https://travis-ci.org/mbikola/ganja-order)
 [![XO code style](https://img.shields.io/badge/code_style-XO-5ed9c7.svg)](https://github.com/xojs/xo)
 [![style: styled-components](https://img.shields.io/badge/style-%F0%9F%92%85%20styled--components-orange.svg?colorB=daa357&colorA=db748e)](https://github.com/styled-components/styled-components)
 [![Cypress.io tests](https://img.shields.io/badge/cypress.io-tests-green.svg)](https://cypress.io)
 
-<p align="left">
-  <a href="https://opencollective.com/pizzaql" target="_blank">
-    <img src="https://cdn-std.dprcdn.net/files/acc_649651/Q5nVhT" height="80" alt="Open Collective">
-  </a>
-  <a href="https://www.patreon.com/akepinski" target="_blank">
-    <img src="https://cdn-std.dprcdn.net/files/acc_649651/plrSCT" height="80" alt="Patreon">
-  </a>
-</p>
-
 ## Goal
 
-The goal of this project is to provide a modern and easy to use order management system with order placement form as well. You can track progress in our TODO list :smile: 
 
 ## Docs
 
-[Here :zap:](https://docs.pizzaql.tech/)
 
-## Screenshots
+## Hacking
 
-![Order Placement Form](media/screenshots/form.png)
-![Dashboard)](media/screenshots/dashboard.png)
+```bash
+cd backend
+docker-compose up -d
+prisma deploy
+npm install && npm start
 
-[See more screenshots](https://github.com/pizzaql/pizzaql/tree/master/media/screenshots)
+cd ../frontend
+vi settings.js
+npm install && npm start
+```
 
-## TODO
+## Auth
 
-**Order Placement System**
-* [x]  Basic Frontend
-  * [x] Production-ready Frontend (styles etc.)
-* [x]  Working Backend
-  * [x] Creating orders
-    * [x] Rewrite to Apollo Client
-    * [x] Use HTML5 form validation wherever possible
-    * [x] Implement prices
-    * [x] Online payments via Stripe
-* [x] Better delivery time selection
-    * [x] Rewrite to date-fns
-    * [x] Display delivery time based on current hour
-* [x] Thank you page
-    * [x] Ability to copy order id
-    * [x] Display simplified order id
-    * [x] Show time left to order delivery
+login & auth powered by [auth0](https://manage.auth0.com/dashboard).  You may need auth0 clientId/secret 
+to get authorization working
 
-**Order Management System**
+## Payments
 
-* [x] Login
-  * [x] Full security with Auth0
-* [x]  Basic Frontend
-  * [x] Listing orders
-    * [ ] **Rewrite to GraphQL Subscriptions (work in progress, requires custom resolver)**
-  * [x] Ability to change order status
-  * [x] Ability to delete orders
-    * [x] Confirmation alert
-  * [ ] Ability to manually add orders
-  * [ ] Production-ready Frontend (styles etc.)
-* [x]  Working Backend
+Supported payment systems:
+- [x] on delivery (cash only)
+- [x] online/credit card using stripe (you may need stripe API credentials)
+- [ ] online/credit card using paypal (you may need to specify paypal API credentials)
+- [ ] online/cryptocurrency 
 
-**Documentation**
+## Links 
 
-* [x] Guides
-  * [x] Development
-  * [x] Production
-  * [ ] Security
-  * [ ] Deployment
-
-**Other**
-
-* [x] Testing with Cypress.io
-* [x] Move from Prisma Cloud to Docker
-* [ ] Integration with Algolia Places API (?)
-* [ ] Release a public demo
-
-(?) - unsure.
-
+- GraphQL Playground at http://localhost:4000/
+- Order placement form at http://localhost:3000
+- Admin dashboard at http://localhost:3000/admin (requires login)
+- Prisma playground: http://localhost:4466  admin: http://localhost:4466/_admin
+- see docker-compose for details
 ## Technology Stack
 
 **Frontend:**
@@ -99,14 +64,3 @@ The goal of this project is to provide a modern and easy to use order management
 - [MongoDB](https://www.mongodb.com/)
 - [Auth0](https://auth0.com/)
 
-## Special thanks
-
-<p align="left">
-  <a href="https://saucelabs.com" target="_blank">
-    <img src="media/sponsors/saucelabs-logo.svg" width="400" alt="Sauce Labs">
-  </a>
-</p>
-
-## License
-
-MIT

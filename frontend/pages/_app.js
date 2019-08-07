@@ -43,7 +43,7 @@ class MyApp extends App {
 			<Container>
 				<ApolloProvider client={client}>
 					<Head>
-						<title>PizzaQL</title>
+						<title>SwissX Order</title>
 					</Head>
 					<Component {...pageProps}/>
 				</ApolloProvider>

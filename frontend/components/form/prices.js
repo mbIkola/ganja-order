@@ -1,63 +1,87 @@
-const prices = {
-	Margharita: {
-		Small: 17,
-		Medium: 20,
-		Large: 23
+export const prices = {
+	'Bubba Kush': {
+		'Eighth (3.5g)': 30,
+		'Quarter (7g)': 55,
+		'Half Ounce (14g)': 105,
+		'Ounce (28g)': 200,
+		SKU: 0
 	},
-	Funghi: {
-		Small: 20,
-		Medium: 23,
-		Large: 26
+	'Hashplant Haze': {
+		'Eighth (3.5g)': 30,
+		'Quarter (7g)': 55,
+		'Half Ounce (14g)': 105,
+		'Ounce (28g)': 200,
+		SKU: 1,
 	},
-	Cacciatore: {
-		Small: 16,
-		Medium: 19,
-		Large: 22
+	'Lemon Cake': {
+		'Eighth (3.5g)': 30,
+		'Quarter (7g)': 55,
+		'Half Ounce (14g)': 105,
+		'Ounce (28g)': 200,
+		SKU: 2
 	},
-	Vesuvio: {
-		Small: 19,
-		Medium: 22,
-		Large: 25
+	'Fire OG': {
+		'Eighth (3.5g)': 30,
+		'Quarter (7g)': 55,
+		'Half Ounce (14g)': 105,
+		'Ounce (28g)': 200,
+		SKU: 3
 	},
-	Milano: {
-		Small: 20,
-		Medium: 23,
-		Large: 26
+	'Black Tuna': {
+		'Eighth (3.5g)': 30,
+		'Quarter (7g)': 55,
+		'Half Ounce (14g)': 105,
+		'Ounce (28g)': 200,
+		SKU: 4,
 	},
-	Capriciosa: {
-		Small: 20,
-		Medium: 23,
-		Large: 26
+	'Strawberry Switch Blade': {
+		'Eighth (3.5g)': 30,
+		'Quarter (7g)': 55,
+		'Half Ounce (14g)': 105,
+		'Ounce (28g)': 200,
+		SKU: 5
 	},
-	Prosciutto: {
-		Small: 21,
-		Medium: 24,
-		Large: 27
+	'Premium AAAA Mix And Match': {
+		'Eighth (3.5g)': 30,
+		'Quarter (7g)': 55,
+		'Half Ounce (14g)': 105,
+		'Ounce (28g)': 200,
+		SKU: 6
 	},
-	Hawaiano: {
-		Small: 21,
-		Medium: 24,
-		Large: 27
+	'Comatose': {
+		'Eighth (3.5g)': 30,
+		'Quarter (7g)': 55,
+		'Half Ounce (14g)': 105,
+		'Ounce (28g)': 200,
+		SKU: 7
 	},
-	Rimini: {
-		Small: 20,
-		Medium: 23,
-		Large: 26
+	'Thin Mint Girl Scout Cookies': {
+		'Eighth (3.5g)': 30,
+		'Quarter (7g)': 55,
+		'Half Ounce (14g)': 105,
+		'Ounce (28g)': 200,
+		SKU: 8
 	},
-	Bali: {
-		Small: 22,
-		Medium: 25,
-		Large: 28
+	'Death Bubba AA': {
+		'Eighth (3.5g)': 30,
+		'Quarter (7g)': 55,
+		'Half Ounce (14g)': 105,
+		'Ounce (28g)': 200,
+		SKU: 9
 	},
-	Pepperoni: {
-		Small: 20,
-		Medium: 23,
-		Large: 26
+	'Micro White Castle': {
+		'Eighth (3.5g)': 30,
+		'Quarter (7g)': 55,
+		'Half Ounce (14g)': 105,
+		'Ounce (28g)': 200,
+		SKU: 10
 	},
-	Torino: {
-		Small: 20,
-		Medium: 23,
-		Large: 26
+	'Blue Dream': {
+		'Eighth (3.5g)': 30,
+		'Quarter (7g)': 55,
+		'Half Ounce (14g)': 105,
+		'Ounce (28g)': 200,
+		SKU: 11
 	}
 };
 

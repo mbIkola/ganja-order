@@ -17,7 +17,7 @@ const Wrapper = ({className}) => (
 	</Label>
 );
 
-const DoughSelect = styled(Wrapper)`
+export const DoughSelect = styled(Wrapper)`
     width: 11rem;
 	user-select: none;
 `;

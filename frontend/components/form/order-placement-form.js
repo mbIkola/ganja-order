@@ -22,6 +22,9 @@ import Submit from './submit';
 const TimeSelect = dynamic(() => import('./time-select'));
 const StripeButton = dynamic(() => import('./stripe-button'));
 
+import {stripeApiKey} from "../../settings";
+import {BitcoinPaymentBox} from "../bitcoin-button/bitcoin-button";
+
 // Custom form validation
 const OrderSchema = Yup.object().shape({
 	name: Yup.string()
@@ -43,7 +46,7 @@ const OrderPlacementForm = () => {
 					initialValues={{
 						type: '',
 						size: '',
-						dough: '',
+					//	dough: '',
 						name: '',
 						phone: '',
 						city: '',
@@ -60,7 +63,7 @@ const OrderPlacementForm = () => {
 								variables: {
 									type: values.type,
 									size: values.size,
-									dough: values.dough,
+								//	dough: values.dough,
 									name: values.name,
 									phone: values.phone,
 									time: values.time,
@@ -89,7 +92,7 @@ const OrderPlacementForm = () => {
 								variables: {
 									type: values.type,
 									size: values.size,
-									dough: values.dough,
+								//	dough: values.dough,
 									name: values.name,
 									phone: values.phone,
 									time: values.time,
@@ -121,7 +124,7 @@ const OrderPlacementForm = () => {
 							<SelectGroup>
 								<TypeSelect value={props.values.type} onChangeText={props.handleChange('type')}/>
 								<SizeSelect value={props.values.size} onChangeText={props.handleChange('size')}/>
-								<DoughSelect value={props.values.dough} onChangeText={props.handleChange('dough')}/>
+								{/*<DoughSelect value={props.values.dough} onChangeText={props.handleChange('dough')}/> */}
 							</SelectGroup>
 							<br/>
 							<Price amount={calculatePrice(props.values.type, props.values.size, props.values.dough)}/>
@@ -154,18 +157,25 @@ const OrderPlacementForm = () => {
     I accept your <Link href="/tos"><a>terms of service</a></Link> and <Link href="/privacy"><a>privacy policy</a></Link>.
 							</Checkbox>
 							<br/>
-							{props.values.onlinePayment ?
+							{props.values.onlinePayment && stripeApiKey ?
 								<StripeCheckout
 									token={props.handleSubmit}
-									stripeKey="pk_test_A6mUVOGtiDJwvnJsg1AmoNxO"
-									name="PizzaQL"
+									stripeKey="pk_test_hAOv1PG56mnQOmBotkCoQT3X009tKYrCqs"
+									name="SwissX Order"
 									label="Pay using Stripe"
 									amount={calculateAmountToPay(props.values.type, props.values.size, props.values.dough)}
-									currency="PLN"
+									currency="CHF"
 								>
 									<StripeButton loading={loading}/>
 								</StripeCheckout> :
 								<Submit loading={loading}/>}
+							{false && props.values.onlinePayment && <BitcoinPaymentBox
+								name="SwissX Order"
+								label="Pay using Bitcoin"
+								coin="BTC"
+								amount={calculateAmountToPay(props.values.type, props.values.size, props.values.dough)}
+								/>
+							}
 							{error && <p>Something went wrong. Try again later.</p>}
 							<Persist name="order-placement-from" debounce={100} isSessionStorage/>
 						</Form>
