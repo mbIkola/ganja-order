@@ -60,7 +60,8 @@ const Order = ({router: {query}}) => {
 									{copySuccess}
 								</div>
 								<br/>
-								<h4 style={{fontSize: '1.2rem'}}>You will receive your order {data.order.time === 'ASAP' ? 'in about an hour' : `at ${data.order.time}`}</h4>
+								<h4 style={{fontSize: '1.2rem'}}>Your order will be processed ASAP </h4>
+								{ /* {data.order.time === 'ASAP' ? 'in about an hour' : `at ${data.order.time}`}</h4> */}
 								<br/>
 								<br/>
 								<p>If you won&apos;t receive your order after that time, please call us:

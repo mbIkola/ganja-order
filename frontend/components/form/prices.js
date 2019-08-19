@@ -85,4 +85,11 @@ export const prices = {
 	}
 };
 
+export const sizes = {
+	'Eighth (3.5g)': 0.0035,
+	'Quarter (7g)': 0.007,
+	'Half Ounce (14g)': 0.014,
+	'Ounce (28g)': 0.028,
+};
+
 export default prices;

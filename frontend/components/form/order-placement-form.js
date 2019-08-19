@@ -8,6 +8,7 @@ import {Persist} from 'formik-persist';
 import {Mutation} from 'react-apollo';
 import StripeCheckout from 'react-stripe-checkout';
 import * as Yup from 'yup';
+import {withRouter} from 'next/router';
 
 import {CREATE_ORDER} from '../api';
 import SelectGroup from './select-group';
@@ -36,9 +37,10 @@ const OrderSchema = Yup.object().shape({
 
 });
 
-export const OrderPlacementForm = () => {
+export const OrderPlacementForm = ({router: {query}}) => {
 
-	const selectedProduct = 'Eighth (3.5g)';
+	const {rate, product} = query;
+	const selectedProduct = 'Ounce (28g)';
 
 	return (
 		<Mutation
@@ -48,7 +50,7 @@ export const OrderPlacementForm = () => {
 				<Formik
 					initialValues={{
 						type: '',
-						size: '',
+						size: 'Ounce (28g)',
 					//	dough: '',
 						name: '',
 						phone: '',
@@ -73,7 +75,7 @@ export const OrderPlacementForm = () => {
 									city: values.city,
 									street: values.street,
 									paid: true,
-									price: calculatePrice(values.type, values.size)
+									price: calculatePrice(product ? product: values.type, values.size, rate)
 								}
 							}).then(async data => {
 								const orderID = await data.data.createOrder.id;
@@ -102,7 +104,7 @@ export const OrderPlacementForm = () => {
 									city: values.city,
 									street: values.street,
 									paid: false,
-									price: calculatePrice(values.type, values.size)
+									price: calculatePrice(product? product: values.type, values.size, rate)
 								}
 							}).then(async data => {
 								const orderID = await data.data.createOrder.id;
@@ -125,12 +127,15 @@ export const OrderPlacementForm = () => {
 					{props => (
 						<Form>
 							<SelectGroup>
-								<TypeSelect value={props.values.type} onChangeText={props.handleChange('type')} selected={selectedProduct} />
+								{ rate && product && <h4>{product} at {rate} CHF/kg</h4>}
+								{
+									(! rate || ! product) && <TypeSelect value={props.values.type} onChangeText={props.handleChange('type')} selected={selectedProduct} />
+								}
 								<SizeSelect value={props.values.size} onChangeText={props.handleChange('size')}/>
 								{/*<DoughSelect value={props.values.dough} onChangeText={props.handleChange('dough')}/> */}
 							</SelectGroup>
 							<br/>
-							<Price amount={calculatePrice(props.values.type, props.values.size)}/>
+							<Price amount={calculatePrice(product? product: props.values.type, props.values.size, rate)}/>
 							<br/>
 							<Input value={props.values.name} onChangeText={props.handleChange('name')} label="Full Name:" type="text" name="name" placeholder="Buyer Name" required/>
 							<Input value={props.values.phone} onChangeText={props.handleChange('phone')} label="Phone:" type="tel" name="phone" placeholder="+1-234-5678" required/>
@@ -167,7 +172,7 @@ export const OrderPlacementForm = () => {
 									name="SwissX Order"
 									label="Pay using Credit Card"
 									panelLabel="Pay using Credit Card"
-									amount={calculateAmountToPay(props.values.type, props.values.size)}
+									amount={calculateAmountToPay(product || props.values.type, props.values.size, rate)}
 									currency="CHF"
 								>
 									<StripeButton loading={loading}/>
@@ -177,7 +182,7 @@ export const OrderPlacementForm = () => {
 								name="SwissX Order"
 								label="Pay using Bitcoin"
 								coin="BTC"
-								amount={calculateAmountToPay(props.values.type, props.values.size)}
+								amount={calculateAmountToPay(product || props.values.type, props.values.size, rate)}
 								/>
 							*/}
 							{error && <p>Something went wrong. Try again later.</p>}
@@ -190,4 +195,4 @@ export const OrderPlacementForm = () => {
 	);
 };
 
-export default OrderPlacementForm;
+export default withRouter(OrderPlacementForm);
