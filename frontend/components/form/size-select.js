@@ -11,9 +11,9 @@ import PropTypes from 'prop-types';
  */
 const Wrapper = ({className}) => (
 	<Label className={className}>
-    Size:
+    Weight:
 		<div className="bp3-select">
-			<FastField name="size" component="select" placeholder="Size" required>
+			<FastField name="size" component="select" placeholder="Weight" required>
 				<option value="">Select</option>
 				<option value="Eighth (3.5g)">Eighth (3.5g)</option>
 				<option value="Quarter (7g)">Quarter (7g)</option>
@@ -24,7 +24,7 @@ const Wrapper = ({className}) => (
 	</Label>
 );
 
-const SizeSelect = styled(Wrapper)`
+export const SizeSelect = styled(Wrapper)`
     width: 11rem;
 	user-select: none;
 `;

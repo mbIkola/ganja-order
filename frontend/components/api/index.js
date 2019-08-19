@@ -9,7 +9,6 @@ const GET_ORDERS = gql`
 			paid
 			price
 			size
-			dough
 			type
 			name
 			phone
@@ -37,7 +36,6 @@ const CREATE_ORDER = gql`
 		$price: String!
 		$type: String!
 		$size: String!
-		$dough: String!
 		$name: String!
 		$phone: String!
 		$time: String!
@@ -50,7 +48,6 @@ const CREATE_ORDER = gql`
 			price: $price
 			type: $type
 			size: $size
-			dough: $dough
 			name: $name
 			phone: $phone
 			time: $time

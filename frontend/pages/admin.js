@@ -37,7 +37,7 @@ const Secret = () => {
 
 	return (
 		<Container>
-			<h1 className="bp3-heading">Welcome to Dashboard!</h1>
+			<h1 className="bp3-heading">SwissX Orders Dashboard!</h1>
 			<br/>
 
 			<p><Icon intent="success" icon="tick-circle" iconSize={18}/> You are logged in, click <a href="/logout">here</a> to logout.</p>
@@ -71,7 +71,6 @@ const Secret = () => {
 									<ul>
 										<li>Type: <strong>{el.type}</strong></li>
 										<li>Size: <strong>{el.size}</strong></li>
-										<li>Dough: <strong>{el.dough}</strong></li>
 										<li>Name: <strong>{el.name}</strong></li>
 										<li>Phone: <strong>{el.phone}</strong></li>
 										<li>Street: <strong>{el.street}</strong></li>

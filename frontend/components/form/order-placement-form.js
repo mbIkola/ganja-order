@@ -13,7 +13,7 @@ import {CREATE_ORDER} from '../api';
 import SelectGroup from './select-group';
 import TypeSelect from './type-select';
 import SizeSelect from './size-select';
-import DoughSelect from './dough-select';
+// import DoughSelect from './dough-select';
 import Price from './price';
 import {calculatePrice, calculateAmountToPay} from './price-calculator';
 import Input from './input';
@@ -23,7 +23,7 @@ const TimeSelect = dynamic(() => import('./time-select'));
 const StripeButton = dynamic(() => import('./stripe-button'));
 
 import {stripeApiKey} from "../../settings";
-import {BitcoinPaymentBox} from "../bitcoin-button/bitcoin-button";
+//const BitcoinPaymentBox = dynamic(() => import('../bitcoin-button/bitcoin-button'));
 
 // Custom form validation
 const OrderSchema = Yup.object().shape({
@@ -36,7 +36,10 @@ const OrderSchema = Yup.object().shape({
 
 });
 
-const OrderPlacementForm = () => {
+export const OrderPlacementForm = () => {
+
+	const selectedProduct = 'Eighth (3.5g)';
+
 	return (
 		<Mutation
 			mutation={CREATE_ORDER}
@@ -52,7 +55,7 @@ const OrderPlacementForm = () => {
 						city: '',
 						street: '',
 						time: '',
-						onlinePayment: false
+						onlinePayment: true
 					}}
 					validationSchema={OrderSchema}
 					onSubmit={async (values, {setSubmitting, resetForm}) => {
@@ -70,7 +73,7 @@ const OrderPlacementForm = () => {
 									city: values.city,
 									street: values.street,
 									paid: true,
-									price: calculatePrice(values.type, values.size, values.dough)
+									price: calculatePrice(values.type, values.size)
 								}
 							}).then(async data => {
 								const orderID = await data.data.createOrder.id;
@@ -80,7 +83,7 @@ const OrderPlacementForm = () => {
 								await resetForm();
 
 								// Move user to the thank you page
-								Router.push({
+								return Router.push({
 									pathname: '/order',
 									query: {id: orderID}
 								});
@@ -99,7 +102,7 @@ const OrderPlacementForm = () => {
 									city: values.city,
 									street: values.street,
 									paid: false,
-									price: calculatePrice(values.type, values.size, values.dough)
+									price: calculatePrice(values.type, values.size)
 								}
 							}).then(async data => {
 								const orderID = await data.data.createOrder.id;
@@ -109,7 +112,7 @@ const OrderPlacementForm = () => {
 								await resetForm();
 
 								// Move user to the thank you page
-								Router.push({
+								return Router.push({
 									pathname: '/order',
 									query: {id: orderID}
 								});
@@ -122,19 +125,19 @@ const OrderPlacementForm = () => {
 					{props => (
 						<Form>
 							<SelectGroup>
-								<TypeSelect value={props.values.type} onChangeText={props.handleChange('type')}/>
+								<TypeSelect value={props.values.type} onChangeText={props.handleChange('type')} selected={selectedProduct} />
 								<SizeSelect value={props.values.size} onChangeText={props.handleChange('size')}/>
 								{/*<DoughSelect value={props.values.dough} onChangeText={props.handleChange('dough')}/> */}
 							</SelectGroup>
 							<br/>
-							<Price amount={calculatePrice(props.values.type, props.values.size, props.values.dough)}/>
+							<Price amount={calculatePrice(props.values.type, props.values.size)}/>
 							<br/>
-							<Input value={props.values.name} onChangeText={props.handleChange('name')} label="Full Name:" type="text" name="name" placeholder="Mark Suckerberg" required/>
-							<Input value={props.values.phone} onChangeText={props.handleChange('phone')} label="Phone:" type="tel" name="phone" placeholder="666666666" required/>
-							<Input value={props.values.street} onChangeText={props.handleChange('street')} label="Address:" type="text" name="street" placeholder="1 Hacker Way" required/>
-							<Input value={props.values.city} onChangeText={props.handleChange('city')} label="City:" type="text" name="city" placeholder="Menlo Park" required/>
+							<Input value={props.values.name} onChangeText={props.handleChange('name')} label="Full Name:" type="text" name="name" placeholder="Buyer Name" required/>
+							<Input value={props.values.phone} onChangeText={props.handleChange('phone')} label="Phone:" type="tel" name="phone" placeholder="+1-234-5678" required/>
+							<Input value={props.values.street} onChangeText={props.handleChange('street')} label="Address:" type="text" name="street" placeholder="Street Address" required/>
+							<Input value={props.values.city} onChangeText={props.handleChange('city')} label="City:" type="text" name="city" placeholder="City" required/>
 							<br/>
-							<TimeSelect value={props.values.time} onChangeText={props.handleChange('time')}/>
+							{/*<TimeSelect value={props.values.time} onChangeText={props.handleChange('time')}/> */}
 							<br/>
 							<RadioGroup
 								name="payment"
@@ -149,7 +152,7 @@ const OrderPlacementForm = () => {
 								selectedValue={props.values.onlinePayment === false ? 'delivery' : 'online'}
 								required
 							>
-								<Radio label="On delivery" value="delivery"/>
+								{/*<Radio label="On delivery" value="delivery"/> */}
 								<Radio label="Online" value="online"/>
 							</RadioGroup>
 							<br/>
@@ -162,20 +165,21 @@ const OrderPlacementForm = () => {
 									token={props.handleSubmit}
 									stripeKey="pk_test_hAOv1PG56mnQOmBotkCoQT3X009tKYrCqs"
 									name="SwissX Order"
-									label="Pay using Stripe"
-									amount={calculateAmountToPay(props.values.type, props.values.size, props.values.dough)}
+									label="Pay using Credit Card"
+									panelLabel="Pay using Credit Card"
+									amount={calculateAmountToPay(props.values.type, props.values.size)}
 									currency="CHF"
 								>
 									<StripeButton loading={loading}/>
 								</StripeCheckout> :
 								<Submit loading={loading}/>}
-							{false && props.values.onlinePayment && <BitcoinPaymentBox
+							{/* props.values.onlinePayment && <BitcoinPaymentBox
 								name="SwissX Order"
 								label="Pay using Bitcoin"
 								coin="BTC"
-								amount={calculateAmountToPay(props.values.type, props.values.size, props.values.dough)}
+								amount={calculateAmountToPay(props.values.type, props.values.size)}
 								/>
-							}
+							*/}
 							{error && <p>Something went wrong. Try again later.</p>}
 							<Persist name="order-placement-from" debounce={100} isSessionStorage/>
 						</Form>

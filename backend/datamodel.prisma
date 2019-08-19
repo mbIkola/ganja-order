@@ -4,7 +4,6 @@ type Order {
     paid: Boolean!
     price: String!
     size: String!
-    dough: String!
     type: String!
     name: String!
     phone: String!

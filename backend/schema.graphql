@@ -40,7 +40,6 @@ type Order implements Node {
   paid: Boolean!
   price: String!
   size: String!
-  dough: String!
   type: String!
   name: String!
   phone: String!
@@ -61,7 +60,6 @@ input OrderCreateInput {
   paid: Boolean!
   price: String!
   size: String!
-  dough: String!
   type: String!
   name: String!
   phone: String!
@@ -86,8 +84,6 @@ enum OrderOrderByInput {
   price_DESC
   size_ASC
   size_DESC
-  dough_ASC
-  dough_DESC
   type_ASC
   type_DESC
   name_ASC
@@ -108,7 +104,6 @@ type OrderPreviousValues {
   paid: Boolean!
   price: String!
   size: String!
-  dough: String!
   type: String!
   name: String!
   phone: String!
@@ -138,7 +133,6 @@ input OrderUpdateInput {
   paid: Boolean
   price: String
   size: String
-  dough: String
   type: String
   name: String
   phone: String
@@ -152,7 +146,6 @@ input OrderUpdateManyMutationInput {
   paid: Boolean
   price: String
   size: String
-  dough: String
   type: String
   name: String
   phone: String
@@ -221,20 +214,6 @@ input OrderWhereInput {
   size_not_starts_with: String
   size_ends_with: String
   size_not_ends_with: String
-  dough: String
-  dough_not: String
-  dough_in: [String!]
-  dough_not_in: [String!]
-  dough_lt: String
-  dough_lte: String
-  dough_gt: String
-  dough_gte: String
-  dough_contains: String
-  dough_not_contains: String
-  dough_starts_with: String
-  dough_not_starts_with: String
-  dough_ends_with: String
-  dough_not_ends_with: String
   type: String
   type_not: String
   type_in: [String!]

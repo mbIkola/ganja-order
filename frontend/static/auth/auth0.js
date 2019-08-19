@@ -13,7 +13,7 @@ const webAuth = (clientID, domain) => {
 const login = () => {
 	const options = {
 		responseType: 'id_token',
-		redirectUri: `${window.location.protocol}://${domain}/redirect`,
+		redirectUri: `http://${domain}/redirect`,
 		scope: 'openid profile email'
 	};
 
@@ -25,7 +25,7 @@ const parseHash = cb => {
 };
 
 const logout = () => {
-	return webAuth(auth0clientID, auth0domain).logout({returnTo: `${window.location.protocol}://${domain}`});
+	return webAuth(auth0clientID, auth0domain).logout({returnTo: `http://${domain}`});
 };
 
 export {

@@ -4,6 +4,7 @@ import {Submit} from "../form/submit";
 import {Checkbox} from "@blueprintjs/core";
 import {Form} from "formik";
 import Link from "next/link";
+import {domain} from "../../settings";
 
 export class BitcoinPaymentBox extends React.Component {
     constructor(props) {
@@ -39,11 +40,13 @@ export class BitcoinPaymentBox extends React.Component {
                     <Input
                         placeholder="Please input your email"
                         onChange={this.handleInput}
+                        required={false}
                         onBlur={/*() =>
                             !this.state.email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i)
                                 ? message.warning("Email is not valid")
                                 : null
                         */ () => {}}
+                        name={"email"}
                     />
                     <Checkbox required onChange={this.handleCheckbox}>
                         I accept your <Link href="/tos"><a>terms of service</a></Link> and <Link href="/privacy"><a>privacy policy</a></Link>.
@@ -53,7 +56,7 @@ export class BitcoinPaymentBox extends React.Component {
                     <input
                         type="hidden"
                         name="redirectUrl"
-                        value="https://example.com/thankyou"
+                        value={`${window.location.protocol}/${domain}/order?orderId=${this.state.orderId || 'CustomSockShopId'}`}
                     />
                     <Submit
                         disabled={disabled}
@@ -68,3 +71,4 @@ export class BitcoinPaymentBox extends React.Component {
         );
     }
 }
+export default BitcoinPaymentBox;

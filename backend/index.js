@@ -8,7 +8,6 @@ const typeDefs = `
 	paid: Boolean!
 	price: String!
     size: String!
-    dough: String!
     type: String!
     name: String!
     phone: String!
@@ -28,7 +27,6 @@ const typeDefs = `
 		paid: Boolean!
 		price: String!
         size: String!
-        dough: String!
         type: String!
         name: String!
         phone: String!
@@ -56,7 +54,6 @@ const resolvers = {
 				paid: args.paid,
 				price: args.price,
 				size: args.size,
-				dough: args.dough,
 				type: args.type,
 				name: args.name,
 				phone: args.phone,

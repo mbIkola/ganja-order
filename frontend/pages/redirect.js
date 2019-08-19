@@ -7,16 +7,18 @@ import {saveToken, verifyToken} from '../static/auth/auth';
 export default () => {
 	useEffect(() => {
 		parseHash(async (err, result) => {
-			await verifyToken(result.idToken).then(valid => {
-				if (valid) {
-					saveToken(result.idToken, result.accessToken);
-					Router.push('/admin');
-				} else {
-					Router.push('/');
-				}
-			});
 			if (err) {
 				console.error('Error signing in', err);
+				Router.push('/admin');
+			} else {
+				await verifyToken(result.idToken).then(valid => {
+					if (valid) {
+						saveToken(result.idToken, result.accessToken);
+						Router.push('/admin');
+					} else {
+						Router.push('/');
+					}
+				});
 			}
 		});
 	}, []);

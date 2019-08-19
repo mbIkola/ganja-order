@@ -9,7 +9,7 @@ const Wrapper = ({className, loading}) => (
 			type="button"
 			loading={loading}
 		>
-Pay using Stripe
+Pay using Credit Card
 		</Button>
 	</div>
 );
