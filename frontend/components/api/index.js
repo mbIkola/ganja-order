@@ -15,6 +15,10 @@ const GET_ORDERS = gql`
 			time
 			city
 			street
+			copayerId
+  			wallet 
+  			walletName 
+  			rate
 		}
 	}
 `;
@@ -41,6 +45,10 @@ const CREATE_ORDER = gql`
 		$time: String!
 		$city: String!
 		$street: String!
+		$copayerId: String
+  		$wallet: String 
+  		$walletName: String 
+  		$rate: String
 	) {
 		createOrder(
 			status: "in progress"
@@ -53,6 +61,10 @@ const CREATE_ORDER = gql`
 			time: $time
 			city: $city
 			street: $street
+	    	copayerId: $copayerId
+     		wallet: $wallet 
+  		    walletName: $walletName 
+  		    rate: $rate
 		) {
 			id
 		}

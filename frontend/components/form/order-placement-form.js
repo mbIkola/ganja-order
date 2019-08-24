@@ -37,9 +37,10 @@ const OrderSchema = Yup.object().shape({
 
 });
 
+// https://exchange.swissx.com/?copayerId=df57b7c96d139cdbdf41c897f98d2bb54d4e80e0409d6fddf0879f0bcd95ac6f&wallet=cfe8d06b-91b7-4e4e-a35f-b0b50d0fcadf&walletName=testwallet
 export const OrderPlacementForm = ({router: {query}}) => {
 
-	const {rate, product} = query;
+	const {rate, product, copayerId, wallet, walletName} = query;
 	const selectedProduct = 'Ounce (28g)';
 
 	return (
@@ -75,6 +76,7 @@ export const OrderPlacementForm = ({router: {query}}) => {
 									city: values.city,
 									street: values.street,
 									paid: true,
+									copayerId, wallet, walletName, rate,
 									price: calculatePrice(product ? product: values.type, values.size, rate)
 								}
 							}).then(async data => {
@@ -104,6 +106,7 @@ export const OrderPlacementForm = ({router: {query}}) => {
 									city: values.city,
 									street: values.street,
 									paid: false,
+									copayerId, wallet, walletName, rate,
 									price: calculatePrice(product? product: values.type, values.size, rate)
 								}
 							}).then(async data => {

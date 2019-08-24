@@ -46,6 +46,10 @@ type Order implements Node {
   time: String!
   city: String!
   street: String!
+  copayerId: String
+  wallet: String
+  walletName: String
+  rate: String
 }
 
 type OrderConnection {
@@ -66,6 +70,10 @@ input OrderCreateInput {
   time: String!
   city: String!
   street: String!
+  copayerId: String
+  wallet: String
+  walletName: String
+  rate: String
 }
 
 type OrderEdge {
@@ -110,6 +118,10 @@ type OrderPreviousValues {
   time: String!
   city: String!
   street: String!
+  copayerId: String
+  wallet: String
+  walletName: String
+  rate: String
 }
 
 type OrderSubscriptionPayload {
@@ -139,6 +151,10 @@ input OrderUpdateInput {
   time: String
   city: String
   street: String
+  copayerId: String
+  wallet: String
+  walletName: String
+  rate: String
 }
 
 input OrderUpdateManyMutationInput {
@@ -152,6 +168,10 @@ input OrderUpdateManyMutationInput {
   time: String
   city: String
   street: String
+  copayerId: String
+  wallet: String
+  walletName: String
+  rate: String
 }
 
 input OrderWhereInput {

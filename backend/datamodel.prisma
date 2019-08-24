@@ -10,4 +10,8 @@ type Order {
     time: String!
     city: String!
     street: String!
+    wallet: String,
+    walletName: String,
+    rate: String,
+    copayerId: String
 }
