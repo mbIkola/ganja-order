@@ -19,7 +19,7 @@ const client = new ApolloClient({
 	ssrMode: true,
 	cache: new InMemoryCache(),
 	link: new HttpLink({
-		uri: 'http://localhost:4000'
+		uri: 'https://exchange.swissx.com/api/'
 	}),
 	freezeResults: true,
 	assumeImmutableResults: true

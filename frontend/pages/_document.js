@@ -72,7 +72,7 @@ export default class MyDocument extends Document {
 					<script
 						src="https://www.paypal.com/sdk/js?client-id=SB_CLIENT_ID">
 					</script>
-					<link rel="icon" href="static/favicon.png"/>
+					<link rel="icon" href="static/favicon.svg"/>
 				</Head>
 				<body>
 					<Main/>

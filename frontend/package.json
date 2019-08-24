@@ -6,6 +6,7 @@
   "dev": "next",
   "build": "next build",
   "start": "next start",
+  "start:screen": "screen -dmS exchange-frontend npm start -- -p 3001",
   "test": "xo && stylelint './pages/**/*.js'",
   "cy:open": "cypress open",
   "cy:run": "cypress run"
