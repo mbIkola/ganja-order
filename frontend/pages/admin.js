@@ -75,9 +75,10 @@ const Secret = () => {
 										<li>Phone: <strong>{el.phone}</strong></li>
 										<li>Street: <strong>{el.street}</strong></li>
 										<li>City: <strong>{el.city}</strong></li>
-										<li>Time: <strong>{el.time}</strong></li>
+										<li>Wallet: <strong>{el.walletName} #{el.wallet}</strong></li>
+										<li>payerId: <strong>{el.copayerId}</strong></li>
 									</ul>
-									<p>Price: {el.price} {el.paid ?
+									<p>Price: {el.price}  Rate: {el.rate} {el.paid ?
 										<Tooltip content="This order WAS paid online">
 											<Icon intent="success" icon="small-tick" iconSize={18}/>
 										</Tooltip> :
