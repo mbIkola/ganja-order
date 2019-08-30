@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import {Button} from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 
-const Wrapper = ({className, loading}) => (
+const Wrapper = ({className, loading, disabled}) => (
 	<div className={className}>
 		<Button
 			type="button"
 			loading={loading}
+			disabled={disabled}
 		>
 Pay using Credit Card
 		</Button>

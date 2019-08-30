@@ -13,6 +13,10 @@ const calculatePrice = (type, size, rate) => {
 	// 	return `${price + 3}.00 CHF`;
 	// }
 
+	if ( ! price )  {
+		return '0.00 CHF';
+	}
+
 	return `${Number(price).toFixed(2)*1} CHF`;
 };
 
@@ -28,6 +32,10 @@ const calculateAmountToPay = (type, size, rate) => {
 	// if (dough === 'Thick') {
 	// 	return (price + 3) * 100;
 	// }
+
+	if ( ! price )  {
+		return 0;
+	}
 
 	return Number(price * 100).toFixed(2)*1;
 };

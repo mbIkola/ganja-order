@@ -4,6 +4,7 @@ import {FastField} from 'formik';
 import {Label} from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 import {sizes} from "./prices";
+import uniq from 'lodash/fp/uniq';
 
 /*
 		'Eighth (3.5g)': 30,
@@ -17,7 +18,7 @@ const Wrapper = ({className}) => (
 		<div className="bp3-select">
 			<FastField name="size" component="select" placeholder="Weight" required>
 				<option value="">Select</option>
-				{ Object.keys(sizes).map( size => <option value={size}>{size}</option>)}
+				{ Object.keys(sizes).map( size => <option key={size} value={size}>{size}</option>)}
 			</FastField>
 		</div>
 	</Label>

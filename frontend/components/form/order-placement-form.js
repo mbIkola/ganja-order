@@ -2,8 +2,8 @@ import React from 'react';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import {Checkbox, Radio, RadioGroup} from '@blueprintjs/core';
-import {Formik, Form} from 'formik';
+import {Checkbox, Label, Radio, RadioGroup} from '@blueprintjs/core';
+import {Formik, Form, ErrorMessage} from 'formik';
 import {Persist} from 'formik-persist';
 import {Mutation} from 'react-apollo';
 import StripeCheckout from 'react-stripe-checkout';
@@ -14,13 +14,11 @@ import {CREATE_ORDER} from '../api';
 import SelectGroup from './select-group';
 import TypeSelect from './type-select';
 import SizeSelect from './size-select';
-// import DoughSelect from './dough-select';
 import Price from './price';
 import {calculatePrice, calculateAmountToPay} from './price-calculator';
 import Input from './input';
 import Submit from './submit';
 
-const TimeSelect = dynamic(() => import('./time-select'));
 const StripeButton = dynamic(() => import('./stripe-button'));
 
 import {stripeApiKey} from "../../settings";
@@ -30,10 +28,11 @@ import {stripeApiKey} from "../../settings";
 const OrderSchema = Yup.object().shape({
 	name: Yup.string()
 		// Regex for checking full name, https://stackoverflow.com/a/45871742
-		.matches(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/, 'Invalid name!'),
+		.matches(/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/, 'Please enter first/lastname'),
 	phone: Yup.string()
 		// Regular expression for checking Polish phone numbers, https://github.com/skotniczny/phonePL
-		.matches(/(?:(?:(?:\+|00)?48)|(?:\(\+?48\)))?(?:1[2-8]|2[2-69]|3[2-49]|4[1-68]|5\d|6[0-35-9]|[7-8][1-9]|9[145])\d{7}$/, 'Invalid phone number!')
+		.matches(/^\+?(1\s?)?((\([0-9]{3}\))|[0-9]{3})[\s\-]?[\0-9]{3}[\s\-]?[0-9]{4}$/, 'Please enter US Phone number. Example: +1-234-555-5678'),
+	total: Yup.number().positive("Please select product type and weight")
 
 });
 
@@ -41,7 +40,7 @@ const OrderSchema = Yup.object().shape({
 export const OrderPlacementForm = ({router: {query}}) => {
 
 	const {rate, product, copayerId, wallet, walletName} = query;
-	const selectedProduct = 'Ounce (28g)';
+	const selectedProduct = product;
 
 	return (
 		<Mutation
@@ -58,6 +57,7 @@ export const OrderPlacementForm = ({router: {query}}) => {
 						city: '',
 						street: '',
 						time: '',
+						total: 0,
 						onlinePayment: true
 					}}
 					validationSchema={OrderSchema}
@@ -127,37 +127,43 @@ export const OrderPlacementForm = ({router: {query}}) => {
 						}
 					}}
 				>
-					{props => (
+					{({handleSubmit, handleChange, handleBlur, values, setFieldValue, isValid}) => {
+
+						// const original = props.handleChange;
+						// props.handleChange = (...args) => { console.log("Onchange", args, this); return original.apply(this, args); };
+						return (
 						<Form>
 							<SelectGroup>
 								{ rate && product && <h4>{product} at {rate} CHF/kg</h4>}
 								{
-									(! rate || ! product) && <TypeSelect value={props.values.type} onChangeText={props.handleChange('type')} selected={selectedProduct} />
+									(! rate || ! product) && <TypeSelect value={values.type || ""} name="type" id="type" onChange={handleChange} onBlur={handleBlur} selected={selectedProduct} />
 								}
-								<SizeSelect value={props.values.size} onChangeText={props.handleChange('size')}/>
+								<SizeSelect value={values.size || ""} name="size" id="size" onChange={handleChange} onBlur={handleBlur}/>
 								{/*<DoughSelect value={props.values.dough} onChangeText={props.handleChange('dough')}/> */}
 							</SelectGroup>
 							<br/>
-							<Price amount={calculatePrice(product? product: props.values.type, props.values.size, rate)}/>
+							<Price amount={calculatePrice(product? product: values.type, values.size, rate)}/>
 							<br/>
-							<Input value={props.values.name} onChangeText={props.handleChange('name')} label="Full Name:" type="text" name="name" placeholder="Buyer Name" required/>
-							<Input value={props.values.phone} onChangeText={props.handleChange('phone')} label="Phone:" type="tel" name="phone" placeholder="+1-234-5678" required/>
-							<Input value={props.values.street} onChangeText={props.handleChange('street')} label="Address:" type="text" name="street" placeholder="Street Address" required/>
-							<Input value={props.values.city} onChangeText={props.handleChange('city')} label="City:" type="text" name="city" placeholder="City" required/>
+
+							<Input value={values.name||""} id={"name"} handleChange={handleChange} handleBlur={handleBlur} label="Full Name:" type="text" name="name" placeholder="Buyer Name" required/>
+							<Input value={values.phone||""} id={"phone"} handleChange={handleChange} handleBlur={handleBlur}  label="Phone:" type="tel" name="phone" placeholder="+1-234-555-5678" required/>
+							<Input value={values.street||""} id={"street"} handleChange={handleChange} handleBlur={handleBlur}  label="Address:" type="text" name="street" placeholder="Street Address" required/>
+							<Input value={values.city||""} id={"city"} handleChange={handleChange} handleBlur={handleBlur}  label="City:" type="text" name="city" placeholder="City" required/>
 							<br/>
 							{/*<TimeSelect value={props.values.time} onChangeText={props.handleChange('time')}/> */}
 							<br/>
+							<input type="hidden" name="total" value={calculateAmountToPay(product || values.type, values.size, rate)} />
 							<RadioGroup
 								name="payment"
 								label="Choose payment option"
 								onChange={() => {
-									if (props.values.onlinePayment === false) {
-										props.setFieldValue('onlinePayment', true);
+									if (values.onlinePayment === false) {
+										setFieldValue('onlinePayment', true);
 									} else {
-										props.setFieldValue('onlinePayment', false);
+										setFieldValue('onlinePayment', false);
 									}
 								}}
-								selectedValue={props.values.onlinePayment === false ? 'delivery' : 'online'}
+								selectedValue={values.onlinePayment === false ? 'delivery' : 'online'}
 								required
 							>
 								{/*<Radio label="On delivery" value="delivery"/> */}
@@ -168,17 +174,17 @@ export const OrderPlacementForm = ({router: {query}}) => {
     I accept your <Link href="/tos"><a>terms of service</a></Link> and <Link href="/privacy"><a>privacy policy</a></Link>.
 							</Checkbox>
 							<br/>
-							{props.values.onlinePayment && stripeApiKey ?
+							{values.onlinePayment && stripeApiKey ?
 								<StripeCheckout
-									token={props.handleSubmit}
+									token={handleSubmit}
 									stripeKey="pk_test_hAOv1PG56mnQOmBotkCoQT3X009tKYrCqs"
 									name="SwissX Order"
 									label="Pay using Credit Card"
 									panelLabel="Pay using Credit Card"
-									amount={calculateAmountToPay(product || props.values.type, props.values.size, rate)}
+									amount={calculateAmountToPay(product || values.type, values.size, rate)}
 									currency="CHF"
 								>
-									<StripeButton loading={loading}/>
+									<StripeButton loading={loading} />
 								</StripeCheckout> :
 								<Submit loading={loading}/>}
 							{/* props.values.onlinePayment && <BitcoinPaymentBox
@@ -191,7 +197,9 @@ export const OrderPlacementForm = ({router: {query}}) => {
 							{error && <p>Something went wrong. Try again later.</p>}
 							<Persist name="order-placement-from" debounce={100} isSessionStorage/>
 						</Form>
-					)}
+						);
+					}
+					}
 				</Formik>
 			)}
 		</Mutation>

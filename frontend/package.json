@@ -46,6 +46,7 @@
   "isomorphic-unfetch": "^3.0.0",
   "js-cookie": "^2.2.1",
   "jsonwebtoken": "^8.5.1",
+  "lodash": "^4.17.15",
   "mem": "^5.1.1",
   "modern-normalize": "^0.5.0",
   "next": "^9.0.3",

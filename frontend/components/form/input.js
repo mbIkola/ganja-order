@@ -4,20 +4,22 @@ import {ErrorMessage, FastField} from 'formik';
 import {Label} from '@blueprintjs/core';
 import PropTypes from 'prop-types';
 
-const Wrapper = ({className, label, type, name, placeholder, required}) => (
+const Input = ({className, label, type, name, placeholder, required, value, handleChange, handleBlur}) => (
 	<Label className={className}>
 		{label}
-		<FastField className="bp3-input" type={type} name={name} placeholder={placeholder} required={required}/>
+		<FastField style={{width: '100%'}} className="bp3-input" type={type} name={name} placeholder={placeholder} required={required} value={value}
+			   onChange={handleChange} onBlur={handleBlur}
+		/>
 		<ErrorMessage name={name} component="div"/>
 	</Label>
 );
-
-export const Input = styled(Wrapper)`
-    .bp3-input {
-        width: 100%;
-		user-select: none;
-    }
-`;
+//
+// export const Input = styled(Wrapper)`
+//     .bp3-input {
+//         width: 100%;
+// 		user-select: none;
+//     }
+// `;
 
 Input.propTypes = {
 	className: PropTypes.string,
