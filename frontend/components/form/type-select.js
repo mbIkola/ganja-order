@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import {prices} from "./prices";
 
-const Wrapper = ({className, selected}) => (
+const TypeSelect = ({className, selected}) => (
 	<Label className={className}>
 Product Type:
 		<div className="bp3-select">
@@ -19,14 +19,14 @@ Product Type:
 		</div>
 	</Label>
 );
-
-const TypeSelect = styled(Wrapper)`
-    width: 11rem;
-	user-select: none;
-`;
-
-TypeSelect.propTypes = {
-	className: PropTypes.string
-};
+//
+// const TypeSelect = styled(Wrapper)`
+//     width: 11rem;
+// 	user-select: none;
+// `;
+//
+// TypeSelect.propTypes = {
+// 	className: PropTypes.string
+// };
 
 export default TypeSelect;

@@ -46,7 +46,51 @@ export const OrderPlacementForm = ({router: {query}}) => {
 		<Mutation
 			mutation={CREATE_ORDER}
 		>
-			{(createOrder, {loading, error}) => (
+			{(createOrder, {loading, error}) => {
+				const formSubmit = async (values, {setSubmitting, resetForm}) => {
+					console.log("On Submit!");
+					await setSubmitting(false);
+
+					const order = {
+						variables: {
+							type: values.type,
+							size: values.size,
+							//	dough: values.dough,
+							name: values.name,
+							phone: values.phone,
+							time: values.time,
+							city: values.city,
+							street: values.street,
+							paid: true,
+							copayerId, wallet, walletName, rate,
+							price: calculatePrice(product ? product: values.type, values.size, rate)
+						}
+					};
+
+					if (! values.onlinePayment) {
+						order.variables.paid = false;
+					}
+					console.log("Submitting): ", order);
+					await createOrder(order).then(async data => {
+						console.log("Order created:", data);
+						const orderID = await data.data.createOrder.id;
+
+						// https://github.com/jaredpalmer/formik-persist/issues/16
+						await resetForm();
+						await resetForm();
+
+						console.debug("Redirecting to order status page....");
+						// Move user to the thank you page
+						return Router.push({
+							pathname: '/order',
+							query: {id: orderID}
+						});
+					}).catch(error => {
+						console.error("Could not create order: ", error);
+					});
+				};
+
+				return (
 				<Formik
 					initialValues={{
 						type: '',
@@ -60,75 +104,11 @@ export const OrderPlacementForm = ({router: {query}}) => {
 						total: 0,
 						onlinePayment: true
 					}}
-					validationSchema={OrderSchema}
-					onSubmit={async (values, {setSubmitting, resetForm}) => {
-						await setSubmitting(false);
-
-						if (values.onlinePayment) {
-							await createOrder({
-								variables: {
-									type: values.type,
-									size: values.size,
-								//	dough: values.dough,
-									name: values.name,
-									phone: values.phone,
-									time: values.time,
-									city: values.city,
-									street: values.street,
-									paid: true,
-									copayerId, wallet, walletName, rate,
-									price: calculatePrice(product ? product: values.type, values.size, rate)
-								}
-							}).then(async data => {
-								const orderID = await data.data.createOrder.id;
-
-								// https://github.com/jaredpalmer/formik-persist/issues/16
-								await resetForm();
-								await resetForm();
-
-								// Move user to the thank you page
-								return Router.push({
-									pathname: '/order',
-									query: {id: orderID}
-								});
-							}).catch(error => {
-								console.log(error);
-							});
-						} else {
-							await createOrder({
-								variables: {
-									type: values.type,
-									size: values.size,
-								//	dough: values.dough,
-									name: values.name,
-									phone: values.phone,
-									time: values.time,
-									city: values.city,
-									street: values.street,
-									paid: false,
-									copayerId, wallet, walletName, rate,
-									price: calculatePrice(product? product: values.type, values.size, rate)
-								}
-							}).then(async data => {
-								const orderID = await data.data.createOrder.id;
-
-								// https://github.com/jaredpalmer/formik-persist/issues/16
-								await resetForm();
-								await resetForm();
-
-								// Move user to the thank you page
-								return Router.push({
-									pathname: '/order',
-									query: {id: orderID}
-								});
-							}).catch(error => {
-								console.log(error);
-							});
-						}
-					}}
+					//validationSchema={OrderSchema}
+					onSubmit={formSubmit}
 				>
 					{({handleSubmit, handleChange, handleBlur, values, setFieldValue, isValid}) => {
-
+						const total = calculateAmountToPay(product || values.type, values.size, rate);
 						// const original = props.handleChange;
 						// props.handleChange = (...args) => { console.log("Onchange", args, this); return original.apply(this, args); };
 						return (
@@ -152,7 +132,7 @@ export const OrderPlacementForm = ({router: {query}}) => {
 							<br/>
 							{/*<TimeSelect value={props.values.time} onChangeText={props.handleChange('time')}/> */}
 							<br/>
-							<input type="hidden" name="total" value={calculateAmountToPay(product || values.type, values.size, rate)} />
+							<input type="hidden" name="total" value={total} />
 							<RadioGroup
 								name="payment"
 								label="Choose payment option"
@@ -176,12 +156,17 @@ export const OrderPlacementForm = ({router: {query}}) => {
 							<br/>
 							{values.onlinePayment && stripeApiKey ?
 								<StripeCheckout
-									token={handleSubmit}
+									token={(token) => {
+										console.info("Got stripe token:", token);
+										console.log("Calling handleSubmit:", handleSubmit);
+									//	debugger;
+										handleSubmit(token);
+									}}
 									stripeKey="pk_test_hAOv1PG56mnQOmBotkCoQT3X009tKYrCqs"
 									name="SwissX Order"
 									label="Pay using Credit Card"
 									panelLabel="Pay using Credit Card"
-									amount={calculateAmountToPay(product || values.type, values.size, rate)}
+									amount={total}
 									currency="CHF"
 								>
 									<StripeButton loading={loading} />
@@ -201,7 +186,7 @@ export const OrderPlacementForm = ({router: {query}}) => {
 					}
 					}
 				</Formik>
-			)}
+			)}}
 		</Mutation>
 	);
 };
