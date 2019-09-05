@@ -73,8 +73,14 @@ const Secret = () => {
 										<li>Size: <strong>{el.size}</strong></li>
 										<li>Name: <strong>{el.name}</strong></li>
 										<li>Phone: <strong>{el.phone}</strong></li>
-										<li>Street: <strong>{el.street}</strong></li>
+										<li>Country: <strong>{el.country}</strong></li>
 										<li>City: <strong>{el.city}</strong></li>
+
+										<li>State: <strong>{el.state}</strong></li>
+										<li>zip: <strong>{el.zipCode}</strong></li>
+										<li>address line1: <strong>{el.address_line1}</strong></li>
+										<li>address line2: <strong>{el.address_line2}</strong></li>
+
 										<li>Wallet: <strong>{el.walletName} #{el.wallet}</strong></li>
 										<li>payerId: <strong>{el.copayerId}</strong></li>
 									</ul>

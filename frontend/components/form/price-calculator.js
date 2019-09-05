@@ -35,7 +35,7 @@ const calculateAmountToPay = (type, size, rate) => {
 		return 0;
 	}
 
-	const res =  Number(price * 100).toFixed(2)*1;
+	const res =  Number(price).toFixed(2)*1;
 
 	console.log(`Amount to pay:${res} cuz rate=${rate} and size=${size}`);
 	return res;

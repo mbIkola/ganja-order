@@ -14,7 +14,11 @@ const GET_ORDERS = gql`
 			phone
 			time
 			city
-			street
+			country
+			state
+			zipCode
+			address_line1
+			address_line2
 			copayerId
   			wallet 
   			walletName 
@@ -43,8 +47,12 @@ const CREATE_ORDER = gql`
 		$name: String!
 		$phone: String!
 		$time: String!
-		$city: String!
-		$street: String!
+		 $country: String
+    $state: String
+    $city: String
+    $zipCode: String
+    $address_line1: String
+    $address_line2: String
 		$copayerId: String
   		$wallet: String 
   		$walletName: String 
@@ -59,8 +67,12 @@ const CREATE_ORDER = gql`
 			name: $name
 			phone: $phone
 			time: $time
-			city: $city
-			street: $street
+			 country: $country
+    state: $state
+    city: $city
+    zipCode: $zipCode
+    address_line1: $address_line1
+    address_line2: $address_line2
 	    	copayerId: $copayerId
      		wallet: $wallet 
   		    walletName: $walletName 

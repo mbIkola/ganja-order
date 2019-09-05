@@ -7,9 +7,12 @@ type Order {
     type: String!
     name: String!
     phone: String!
-    time: String!
-    city: String!
-    street: String!
+    country: String,
+    state: String,
+    city: String,
+    zipCode: String,
+    address_line1: String,
+    address_line2: String,
     wallet: String,
     walletName: String,
     rate: String,

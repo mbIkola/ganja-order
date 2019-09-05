@@ -12,8 +12,12 @@ const typeDefs = `
     name: String!
     phone: String!
     time: String!
-    city: String!
-    street: String!
+    country: String
+    state: String
+    city: String
+    zipCode: String
+    address_line1: String
+    address_line2: String
     copayerId: String
     wallet: String
     walletName: String
@@ -35,8 +39,12 @@ const typeDefs = `
         name: String!
         phone: String!
         time: String!
-        city: String!
-        street: String!
+         country: String
+    state: String
+    city: String
+    zipCode: String
+    address_line1: String
+    address_line2: String
         copayerId: String
         wallet: String
         walletName: String 
@@ -60,20 +68,7 @@ const resolvers = {
 			//const {copayerId, wallet, walletName, rate} = args;
 			return ctx.prisma.mutation.createOrder({
 				data: {
-					status: args.status,
-					paid: args.paid,
-					price: args.price,
-					size: args.size,
-					type: args.type,
-					name: args.name,
-					phone: args.phone,
-					time: args.time,
-					city: args.city,
-					copayerId: args.copayerId,
-					wallet: args.wallet,
-					walletName: args.walletName,
-					rate: args.rate,
-					street: args.street
+				...args
 				}
 			}, info)
 		},

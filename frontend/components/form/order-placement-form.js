@@ -53,14 +53,7 @@ export const OrderPlacementForm = ({router: {query}}) => {
 
 					const order = {
 						variables: {
-							type: values.type,
-							size: values.size,
-							//	dough: values.dough,
-							name: values.name,
-							phone: values.phone,
-							time: values.time,
-							city: values.city,
-							street: values.street,
+							...values,
 							paid: true,
 							copayerId, wallet, walletName, rate,
 							price: calculatePrice(product ? product: values.type, values.size, rate)
@@ -94,12 +87,16 @@ export const OrderPlacementForm = ({router: {query}}) => {
 				<Formik
 					initialValues={{
 						type: '',
-						size: 'Ounce (28g)',
+						size: 'Pound (454 g)',
 					//	dough: '',
 						name: '',
 						phone: '',
+						country: '',
+						state: '',
 						city: '',
-						street: '',
+						zipCode: '',
+						address_line1: '',
+						address_line2: '',
 						time: '',
 						total: 0,
 						onlinePayment: true
@@ -125,10 +122,14 @@ export const OrderPlacementForm = ({router: {query}}) => {
 							<Price amount={calculatePrice(product? product: values.type, values.size, rate)}/>
 							<br/>
 
-							<Input value={values.name||""} id={"name"} handleChange={handleChange} handleBlur={handleBlur} label="Full Name:" type="text" name="name" placeholder="Buyer Name" required/>
-							<Input value={values.phone||""} id={"phone"} handleChange={handleChange} handleBlur={handleBlur}  label="Phone:" type="tel" name="phone" placeholder="+1-234-555-5678" required/>
-							<Input value={values.street||""} id={"street"} handleChange={handleChange} handleBlur={handleBlur}  label="Address:" type="text" name="street" placeholder="Street Address" required/>
-							<Input value={values.city||""} id={"city"} handleChange={handleChange} handleBlur={handleBlur}  label="City:" type="text" name="city" placeholder="City" required/>
+							<Input value={values.name||""} id={"name"} handleChange={handleChange} handleBlur={handleBlur} label="Full Name:" autocomplete="name" type="text" name="name" placeholder="Buyer Name" required/>
+							<Input value={values.phone||""} id={"phone"} handleChange={handleChange} handleBlur={handleBlur}  label="Phone:" autocomplete="tel" type="tel" name="phone" placeholder="+1-234-555-5678" required/>
+							<Input value={values.country||""} id={"country"} handleChange={handleChange} handleBlur={handleBlur}  label="Country:" type="text" autocomplete="country" name="country" placeholder="country" required/>
+							<Input value={values.state||""} id={"state"} handleChange={handleChange} handleBlur={handleBlur}  label="State:" type="text" name="state" autocomplete="address-level1" placeholder="State / Province" required/>
+							<Input value={values.city||""} id={"city"} handleChange={handleChange} handleBlur={handleBlur}  label="City:" type="text" name="city" autocomplete="city" placeholder="City" required/>
+							<Input value={values.zipCode||""} id={"zipCode"} handleChange={handleChange} handleBlur={handleBlur}  label="zipCode" type="text" autocomplete="postal-code" name="zipCode" placeholder="zipCode" required/>
+							<Input value={values.address_line1||""} id={"address1"} handleChange={handleChange} handleBlur={handleBlur}  label="Address Line 1:" autocomplete="street-address" type="text" name="address_line1" placeholder="Street address or PO box" required/>
+							<Input value={values.address_line2||""} id={"address_line2"} handleChange={handleChange} handleBlur={handleBlur}  label="Address Line 2:"  autocomplete="address-line2" type="text" name="address_line2" placeholder="Appartment/Suite number, unit, building, floor, etc" required/>
 							<br/>
 							{/*<TimeSelect value={props.values.time} onChangeText={props.handleChange('time')}/> */}
 							<br/>

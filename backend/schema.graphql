@@ -44,9 +44,13 @@ type Order implements Node {
   name: String!
   phone: String!
   time: String!
-  city: String!
-  street: String!
-  copayerId: String
+   country: String
+    state: String
+    city: String
+    zipCode: String
+    address_line1: String
+    address_line2: String
+   copayerId: String
   wallet: String
   walletName: String
   rate: String
@@ -68,9 +72,13 @@ input OrderCreateInput {
   name: String!
   phone: String!
   time: String!
-  city: String!
-  street: String!
-  copayerId: String
+   country: String
+    state: String
+    city: String
+    zipCode: String
+    address_line1: String
+    address_line2: String
+   copayerId: String
   wallet: String
   walletName: String
   rate: String
@@ -102,8 +110,6 @@ enum OrderOrderByInput {
   time_DESC
   city_ASC
   city_DESC
-  street_ASC
-  street_DESC
 }
 
 type OrderPreviousValues {
@@ -116,8 +122,14 @@ type OrderPreviousValues {
   name: String!
   phone: String!
   time: String!
-  city: String!
-  street: String!
+
+   country: String
+    state: String
+    city: String
+    zipCode: String
+    address_line1: String
+    address_line2: String
+
   copayerId: String
   wallet: String
   walletName: String
@@ -149,8 +161,14 @@ input OrderUpdateInput {
   name: String
   phone: String
   time: String
-  city: String
-  street: String
+
+   country: String
+    state: String
+    city: String
+    zipCode: String
+    address_line1: String
+    address_line2: String
+
   copayerId: String
   wallet: String
   walletName: String
@@ -166,8 +184,14 @@ input OrderUpdateManyMutationInput {
   name: String
   phone: String
   time: String
-  city: String
-  street: String
+
+   country: String
+    state: String
+    city: String
+    zipCode: String
+    address_line1: String
+    address_line2: String
+
   copayerId: String
   wallet: String
   walletName: String
@@ -304,20 +328,7 @@ input OrderWhereInput {
   city_not_starts_with: String
   city_ends_with: String
   city_not_ends_with: String
-  street: String
-  street_not: String
-  street_in: [String!]
-  street_not_in: [String!]
-  street_lt: String
-  street_lte: String
-  street_gt: String
-  street_gte: String
-  street_contains: String
-  street_not_contains: String
-  street_starts_with: String
-  street_not_starts_with: String
-  street_ends_with: String
-  street_not_ends_with: String
+
 }
 
 input OrderWhereUniqueInput {
