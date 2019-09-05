@@ -53,7 +53,9 @@
   "prop-types": "^15.7.2",
   "react": "^16.8.6",
   "react-apollo": "^3.0.0",
+  "react-country-region-selector": "^1.4.4",
   "react-dom": "^16.8.6",
+  "react-select-country-list": "^2.0.1",
   "react-stripe-checkout": "^2.6.3",
   "styled-components": "^4.3.2",
   "yup": "^0.27.0"

@@ -19,9 +19,13 @@ import {calculatePrice, calculateAmountToPay} from './price-calculator';
 import Input from './input';
 import Submit from './submit';
 
+import {CountryDropdown, RegionDropdown} from 'react-country-region-selector';
+
 const StripeButton = dynamic(() => import('./stripe-button'));
 
 import {stripeApiKey} from "../../settings";
+import RegionInput from "./region";
+import CountryInput from "./country";
 //const BitcoinPaymentBox = dynamic(() => import('../bitcoin-button/bitcoin-button'));
 
 // Custom form validation
@@ -124,8 +128,8 @@ export const OrderPlacementForm = ({router: {query}}) => {
 
 							<Input value={values.name||""} id={"name"} handleChange={handleChange} handleBlur={handleBlur} label="Full Name:" autocomplete="name" type="text" name="name" placeholder="Buyer Name" required/>
 							<Input value={values.phone||""} id={"phone"} handleChange={handleChange} handleBlur={handleBlur}  label="Phone:" autocomplete="tel" type="tel" name="phone" placeholder="+1-234-555-5678" required/>
-							<Input value={values.country||""} id={"country"} handleChange={handleChange} handleBlur={handleBlur}  label="Country:" type="text" autocomplete="country" name="country" placeholder="country" required/>
-							<Input value={values.state||""} id={"state"} handleChange={handleChange} handleBlur={handleBlur}  label="State:" type="text" name="state" autocomplete="address-level1" placeholder="State / Province" required/>
+							<CountryInput value={values.country||""} id={"country"} handleChange={handleChange}   label="Country:" priorityOptions={["CA", "US", "GB"]} type="text" autocomplete="country" name="country" placeholder="country" required/>
+							<RegionInput value={values.state||""} id={"state"}  country={values.country} handleChange={handleChange}   label="State:" type="text" name="state" autocomplete="address-level1" placeholder="State / Province" required/>
 							<Input value={values.city||""} id={"city"} handleChange={handleChange} handleBlur={handleBlur}  label="City:" type="text" name="city" autocomplete="city" placeholder="City" required/>
 							<Input value={values.zipCode||""} id={"zipCode"} handleChange={handleChange} handleBlur={handleBlur}  label="zipCode" type="text" autocomplete="postal-code" name="zipCode" placeholder="zipCode" required/>
 							<Input value={values.address_line1||""} id={"address1"} handleChange={handleChange} handleBlur={handleBlur}  label="Address Line 1:" autocomplete="street-address" type="text" name="address_line1" placeholder="Street address or PO box" required/>
