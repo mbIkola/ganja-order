@@ -54,6 +54,7 @@ export const OrderPlacementForm = ({router: {query}}) => {
 					const order = {
 						variables: {
 							...values,
+							time: "" + (+new Date()),
 							paid: true,
 							copayerId, wallet, walletName, rate,
 							price: calculatePrice(product ? product: values.type, values.size, rate)
@@ -97,7 +98,6 @@ export const OrderPlacementForm = ({router: {query}}) => {
 						zipCode: '',
 						address_line1: '',
 						address_line2: '',
-						time: '',
 						total: 0,
 						onlinePayment: true
 					}}

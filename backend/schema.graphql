@@ -43,7 +43,6 @@ type Order implements Node {
   type: String!
   name: String!
   phone: String!
-  time: String!
    country: String
     state: String
     city: String
@@ -71,7 +70,6 @@ input OrderCreateInput {
   type: String!
   name: String!
   phone: String!
-  time: String!
    country: String
     state: String
     city: String
@@ -106,8 +104,7 @@ enum OrderOrderByInput {
   name_DESC
   phone_ASC
   phone_DESC
-  time_ASC
-  time_DESC
+
   city_ASC
   city_DESC
 }
@@ -121,7 +118,6 @@ type OrderPreviousValues {
   type: String!
   name: String!
   phone: String!
-  time: String!
 
    country: String
     state: String
@@ -160,7 +156,6 @@ input OrderUpdateInput {
   type: String
   name: String
   phone: String
-  time: String
 
    country: String
     state: String
@@ -183,7 +178,6 @@ input OrderUpdateManyMutationInput {
   type: String
   name: String
   phone: String
-  time: String
 
    country: String
     state: String
@@ -300,20 +294,6 @@ input OrderWhereInput {
   phone_not_starts_with: String
   phone_ends_with: String
   phone_not_ends_with: String
-  time: String
-  time_not: String
-  time_in: [String!]
-  time_not_in: [String!]
-  time_lt: String
-  time_lte: String
-  time_gt: String
-  time_gte: String
-  time_contains: String
-  time_not_contains: String
-  time_starts_with: String
-  time_not_starts_with: String
-  time_ends_with: String
-  time_not_ends_with: String
   city: String
   city_not: String
   city_in: [String!]

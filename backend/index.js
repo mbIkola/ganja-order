@@ -11,7 +11,6 @@ const typeDefs = `
     type: String!
     name: String!
     phone: String!
-    time: String!
     country: String
     state: String
     city: String
@@ -38,7 +37,6 @@ const typeDefs = `
         type: String!
         name: String!
         phone: String!
-        time: String!
          country: String
     state: String
     city: String

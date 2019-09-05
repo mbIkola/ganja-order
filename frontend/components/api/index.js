@@ -12,7 +12,6 @@ const GET_ORDERS = gql`
 			type
 			name
 			phone
-			time
 			city
 			country
 			state
@@ -32,7 +31,7 @@ const GET_ORDER_BY_ID = gql`
 	query Order($id: ID!) {
 		order(id: $id) {
 			id
-			time
+			
 		}
 	}
 `;
@@ -46,7 +45,6 @@ const CREATE_ORDER = gql`
 		$size: String!
 		$name: String!
 		$phone: String!
-		$time: String!
 		 $country: String
     $state: String
     $city: String
@@ -66,7 +64,6 @@ const CREATE_ORDER = gql`
 			size: $size
 			name: $name
 			phone: $phone
-			time: $time
 			 country: $country
     state: $state
     city: $city
