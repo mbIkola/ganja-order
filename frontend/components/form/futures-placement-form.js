@@ -61,7 +61,7 @@ export const FuturePlacementForm = ({router: {query}}) => {
                     console.log("Submitting): ", future);
                     await createfuture(future).then(async data => {
                         console.log("Futures created:", data);
-                        const futureID = await data.data.createfuture.id;
+                        const futureID = await data.data.createFuture.id;
 
                         // https://github.com/jaredpalmer/formik-persist/issues/16
                         await resetForm();
@@ -102,7 +102,7 @@ export const FuturePlacementForm = ({router: {query}}) => {
                             return (
                                 <Form>
                                     <SelectGroup>
-                                        { rate && product && <h4>{product} at {rate} CHF/kg</h4>}
+                                        { rate && product && <h4>SELL {product} at {rate} CHF/kg</h4>}
                                         {
                                             (! rate || ! product) && <TypeSelect label="Select a product you want to sell"
                                                                                  value={values.type || ""}

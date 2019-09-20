@@ -60,6 +60,16 @@ const GET_ORDER_BY_ID = gql`
 	}
 `;
 
+// Query to get information about an order using it's id
+export const GET_FUTURE_BY_ID = gql`
+	query Future($id: ID!) {
+		future(id: $id) {
+			id
+
+		}
+	}
+`;
+
 // Mutation to create a new order
 const CREATE_ORDER = gql`	
 	mutation CreateOrder (
