@@ -6,9 +6,9 @@ import PropTypes from 'prop-types';
 
 import {prices} from "./prices";
 
-const TypeSelect = ({className, selected}) => (
+const TypeSelect = ({className, selected, label}) => (
 	<Label className={className}>
-Product Type:
+		{ label ? label : "Product Type:" }
 		<div className="bp3-select">
 			<FastField name="type" component="select" placeholder="Product Type" required>
 				<option value="">Select</option>

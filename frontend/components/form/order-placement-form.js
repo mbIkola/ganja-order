@@ -126,14 +126,14 @@ export const OrderPlacementForm = ({router: {query}}) => {
 							<Price amount={calculatePrice(product? product: values.type, values.size, rate)}/>
 							<br/>
 
-							<Input value={values.name||""} id={"name"} handleChange={handleChange} handleBlur={handleBlur} label="Full Name:" autocomplete="name" type="text" name="name" placeholder="Buyer Name" required/>
-							<Input value={values.phone||""} id={"phone"} handleChange={handleChange} handleBlur={handleBlur}  label="Phone:" autocomplete="tel" type="tel" name="phone" placeholder="+1-234-555-5678" required/>
-							<CountryInput value={values.country||""} id={"country"} handleChange={handleChange}   label="Country:" priorityOptions={["CA", "US", "GB"]} type="text" autocomplete="country" name="country" placeholder="country" required/>
-							<RegionInput value={values.state||""} id={"state"}  country={values.country} handleChange={handleChange}   label="State:" type="text" name="state" autocomplete="address-level1" placeholder="State / Province" required/>
-							<Input value={values.city||""} id={"city"} handleChange={handleChange} handleBlur={handleBlur}  label="City:" type="text" name="city" autocomplete="city" placeholder="City" required/>
-							<Input value={values.zipCode||""} id={"zipCode"} handleChange={handleChange} handleBlur={handleBlur}  label="zipCode" type="text" autocomplete="postal-code" name="zipCode" placeholder="zipCode" required/>
-							<Input value={values.address_line1||""} id={"address1"} handleChange={handleChange} handleBlur={handleBlur}  label="Address Line 1:" autocomplete="street-address" type="text" name="address_line1" placeholder="Street address or PO box" required/>
-							<Input value={values.address_line2||""} id={"address_line2"} handleChange={handleChange} handleBlur={handleBlur}  label="Address Line 2:"  autocomplete="address-line2" type="text" name="address_line2" placeholder="Appartment/Suite number, unit, building, floor, etc" required/>
+							<Input value={values.name||""} id={"name"} handleChange={handleChange} handleBlur={handleBlur} label="Full Name:" autoComplete="name" type="text" name="name" placeholder="Buyer Name" required/>
+							<Input value={values.phone||""} id={"phone"} handleChange={handleChange} handleBlur={handleBlur}  label="Phone:" autoComplete="tel" type="tel" name="phone" placeholder="+1-234-555-5678" required/>
+							<CountryInput value={values.country||""} id={"country"} handleChange={handleChange}   label="Country:" priorityOptions={["CA", "US", "GB"]} type="text" autoComplete="country" name="country" placeholder="country" required/>
+							<RegionInput value={values.state||""} id={"state"}  country={values.country} handleChange={handleChange}   label="State:" type="text" name="state" autoComplete="address-level1" placeholder="State / Province" required/>
+							<Input value={values.city||""} id={"city"} handleChange={handleChange} handleBlur={handleBlur}  label="City:" type="text" name="city" autoComplete="city" placeholder="City" required/>
+							<Input value={values.zipCode||""} id={"zipCode"} handleChange={handleChange} handleBlur={handleBlur}  label="zipCode" type="text" autoComplete="postal-code" name="zipCode" placeholder="zipCode" required/>
+							<Input value={values.address_line1||""} id={"address1"} handleChange={handleChange} handleBlur={handleBlur}  label="Address Line 1:" autoComplete="street-address" type="text" name="address_line1" placeholder="Street address or PO box" required/>
+							<Input value={values.address_line2||""} id={"address_line2"} handleChange={handleChange} handleBlur={handleBlur}  label="Address Line 2:"  autoComplete="address-line2" type="text" name="address_line2" placeholder="Appartment/Suite number, unit, building, floor, etc" required/>
 							<br/>
 							{/*<TimeSelect value={props.values.time} onChangeText={props.handleChange('time')}/> */}
 							<br/>

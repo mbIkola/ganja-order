@@ -11,9 +11,9 @@ const Amount = styled.p`
     font-weight: bold;
 `;
 
-const Price = ({amount}) => (
+const Price = ({amount, rate, size}) => (
 	<Wrapper>
-		<Amount>Total: {amount}</Amount>
+		<Amount>Total: {amount}  &nbsp; {rate && size? `(${rate}/kg * ${size})` : ''}</Amount>
 	</Wrapper>
 );
 

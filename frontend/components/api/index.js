@@ -25,6 +25,30 @@ const GET_ORDERS = gql`
 		}
 	}
 `;
+const GET_FUTURES = gql`
+	query {
+		futures {
+			id
+			status
+			paid
+			price
+			size
+			type
+			name
+			phone
+			city
+			country
+			state
+			zipCode
+			address_line1
+			address_line2
+			copayerId
+			wallet
+			walletName
+			rate
+		}
+	}
+`;
 
 // Query to get information about an order using it's id
 const GET_ORDER_BY_ID = gql`
@@ -64,12 +88,12 @@ const CREATE_ORDER = gql`
 			size: $size
 			name: $name
 			phone: $phone
-			 country: $country
-    state: $state
-    city: $city
-    zipCode: $zipCode
-    address_line1: $address_line1
-    address_line2: $address_line2
+			country: $country
+			state: $state
+			city: $city
+			zipCode: $zipCode
+			address_line1: $address_line1
+			address_line2: $address_line2
 	    	copayerId: $copayerId
      		wallet: $wallet 
   		    walletName: $walletName 
@@ -79,6 +103,52 @@ const CREATE_ORDER = gql`
 		}
 	}
 `;
+
+
+// Mutation to create a new order
+export const CREATE_FUTURE = gql`
+	mutation CreateFuture (
+		$price: String!
+		$type: String!
+		$size: String!
+		$name: String!
+		$phone: String!
+		$country: String
+		$state: String
+		$city: String
+		$zipCode: String
+		$address_line1: String
+		$address_line2: String
+		$copayerId: String
+		$wallet: String
+		$walletName: String
+		$rate: String
+	) {
+		createFuture(
+			status: "in progress"
+			paid: false
+			price: $price
+			type: $type
+			size: $size
+			name: $name
+			phone: $phone
+			country: $country
+			state: $state
+			city: $city
+			zipCode: $zipCode
+			address_line1: $address_line1
+			address_line2: $address_line2
+			copayerId: $copayerId
+			wallet: $wallet
+			walletName: $walletName
+			rate: $rate
+		) {
+			id
+		}
+	}
+`;
+
+
 
 // Mutation to update order status
 const CHANGE_ORDER_STATUS = gql`	

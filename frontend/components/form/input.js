@@ -13,6 +13,7 @@ const Input = ({className, label, type, name, placeholder, required, value, hand
 		<ErrorMessage name={name} component="div"/>
 	</Label>
 );
+
 //
 // export const Input = styled(Wrapper)`
 //     .bp3-input {
