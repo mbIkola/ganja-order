@@ -1,4 +1,5 @@
 import Link from 'next/link'
-export default ({ url: { query: { name } } }) => (
+import {withRouter} from "next/router";
+export default withRouter(( {router: {query: { name } }} ) => (
     <p>About { name }</p>
-);
+));
