@@ -2,8 +2,8 @@ import React from 'react';
 import Router from 'next/router';
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import {Checkbox, Label, Radio, RadioGroup} from '@blueprintjs/core';
-import {Formik, Form, ErrorMessage} from 'formik';
+import {Checkbox, Radio, RadioGroup} from '@blueprintjs/core';
+import {Formik, Form} from 'formik';
 import {Persist} from 'formik-persist';
 import {Mutation} from 'react-apollo';
 import StripeCheckout from 'react-stripe-checkout';
@@ -19,11 +19,9 @@ import {calculatePrice, calculateAmountToPay} from './price-calculator';
 import Input from './input';
 import Submit from './submit';
 
-import {CountryDropdown, RegionDropdown} from 'react-country-region-selector';
-
 const StripeButton = dynamic(() => import('./stripe-button'));
 
-import {stripeApiKey} from "../../settings";
+import {stripeApiKey, allowCreditCard} from "../../settings";
 import RegionInput from "./region";
 import CountryInput from "./country";
 //const BitcoinPaymentBox = dynamic(() => import('../bitcoin-button/bitcoin-button'));
@@ -65,19 +63,14 @@ export const OrderPlacementForm = ({router: {query}}) => {
 						}
 					};
 
-					if (! values.onlinePayment) {
+					if (! values.onlinePayment || ! allowCreditCard) {
 						order.variables.paid = false;
 					}
-					console.log("Submitting): ", order);
 					await createOrder(order).then(async data => {
-						console.log("Order created:", data);
 						const orderID = await data.data.createOrder.id;
-
-						// https://github.com/jaredpalmer/formik-persist/issues/16
 						await resetForm();
 						await resetForm();
 
-						console.debug("Redirecting to order status page....");
 						// Move user to the thank you page
 						return Router.push({
 							pathname: '/order',
@@ -92,7 +85,7 @@ export const OrderPlacementForm = ({router: {query}}) => {
 				<Formik
 					initialValues={{
 						type: '',
-						size: 'Pound (454 g)',
+						size: '1 kg',
 					//	dough: '',
 						name: '',
 						phone: '',
@@ -138,33 +131,34 @@ export const OrderPlacementForm = ({router: {query}}) => {
 							{/*<TimeSelect value={props.values.time} onChangeText={props.handleChange('time')}/> */}
 							<br/>
 							<input type="hidden" name="total" value={total} />
-							<RadioGroup
-								name="payment"
-								label="Choose payment option"
-								onChange={() => {
-									if (values.onlinePayment === false) {
-										setFieldValue('onlinePayment', true);
-									} else {
-										setFieldValue('onlinePayment', false);
-									}
-								}}
-								selectedValue={values.onlinePayment === false ? 'delivery' : 'online'}
-								required
-							>
-								{/*<Radio label="On delivery" value="delivery"/> */}
-								<Radio label="Online" value="online"/>
-							</RadioGroup>
+
+							{
+								allowCreditCard && <RadioGroup
+									name="payment"
+									label="Choose payment option"
+									onChange={() => {
+										if (values.onlinePayment === false) {
+											setFieldValue('onlinePayment', true);
+										} else {
+											setFieldValue('onlinePayment', false);
+										}
+									}}
+									selectedValue={values.onlinePayment === false ? 'delivery' : 'online'}
+									required
+								>
+									{/*<Radio label="On delivery" value="delivery"/> */}
+									<Radio label="Online" value="online"/>
+								</RadioGroup>
+							}
 							<br/>
 							<Checkbox required>
     I accept your <Link href="/tos"><a>terms of service</a></Link> and <Link href="/privacy"><a>privacy policy</a></Link>.
 							</Checkbox>
 							<br/>
-							{values.onlinePayment && stripeApiKey ?
+							{allowCreditCard && values.onlinePayment && stripeApiKey ?
 								<StripeCheckout
 									token={(token) => {
 										console.info("Got stripe token:", token);
-										console.log("Calling handleSubmit:", handleSubmit);
-									//	debugger;
 										handleSubmit(token);
 									}}
 									stripeKey="pk_test_hAOv1PG56mnQOmBotkCoQT3X009tKYrCqs"
@@ -176,7 +170,10 @@ export const OrderPlacementForm = ({router: {query}}) => {
 								>
 									<StripeButton loading={loading} />
 								</StripeCheckout> :
-								<Submit loading={loading}/>}
+								<Submit loading={loading}/>
+							/* end of allowCreditCard */
+							}
+
 							{/* props.values.onlinePayment && <BitcoinPaymentBox
 								name="SwissX Order"
 								label="Pay using Bitcoin"

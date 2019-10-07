@@ -82,7 +82,7 @@ export const FuturePlacementForm = ({router: {query}}) => {
                     <Formik
                         initialValues={{
                             type: '',
-                            size: 'Pound (454 g)',
+                            size: '1 kg',
                             //	dough: '',
                             name: '',
                             phone: '',

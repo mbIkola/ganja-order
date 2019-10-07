@@ -1,5 +1,9 @@
+
 const {GraphQLServer} = require('graphql-yoga');
 const {Prisma} = require('prisma-binding');
+
+const notify = require('./lib/mail').createMailNotificator();
+const  {FUTURE, ORDER} = require('./lib/consts');
 
 const typeDefs = `
   type Order {
@@ -115,12 +119,20 @@ const resolvers = {
 	},
 	Mutation: {
 		createOrder: (root, args, ctx, info) => {
+
 			//const {copayerId, wallet, walletName, rate} = args;
 			return ctx.prisma.mutation.createOrder({
 				data: {
 				...args
 				}
-			}, info)
+			}, info).then((order) => {
+				const {id, __typename} = order;
+				notify(__typename, {...args, id});
+				return order;
+			}).catch(err => {
+				console.error(err);
+				throw err;
+			});
 		},
 		createFuture: (root, args, ctx, info) => {
 			//const {copayerId, wallet, walletName, rate} = args;
@@ -128,7 +140,11 @@ const resolvers = {
 				data: {
 					...args
 				}
-			}, info)
+			}, info).then( (future) => {
+				const {id, __typename} = future;
+				notify(__typename, {...args, id});
+				return future;
+			});
 		},
 		updateOrder: (root, args, ctx, info) =>
 			ctx.prisma.mutation.updateOrder({data: {status: args.status}, where: {id: args.id}}, info),
